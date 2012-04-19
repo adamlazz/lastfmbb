@@ -4,10 +4,13 @@ bb-last
 
 Installation
 ------------
-	git clone (this repository)
+In order to obtain a Last.fm API key, sign up at: http://www.last.fm/api
+
+	git clone git@github.com:adamlazz/bb-last.git
 	cd bb-last
 
 To run:
+	Edit options in bb-last.rb
 	ruby bb-last.rb
 
 Options

@@ -36,11 +36,11 @@ def gen_bb(xml_s, req)
     color = "#d51007"
     items = 1
         
-    if (req.method == "user.gettopalbums")
+    if (req.method == "user.getTopAlbums")
         method = "album"
-    elsif (req.method == "user.gettopartists")
+    elsif (req.method == "user.getTopArtists")
         method = "artist"
-    elsif (req.method == "user.gettoptracks")
+    elsif (req.method == "user.getTopTracks")
         method = "track"
         puts method
     else
@@ -87,7 +87,7 @@ def gen_bb(xml_s, req)
 end
 
 # main
-method  = "user.gettopartists"   # albums, artists, tracks
+method  = "user.getTopTracks"  # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
 limit   = "5"                   # results per page (default 50) 

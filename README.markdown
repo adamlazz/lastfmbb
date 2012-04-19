@@ -10,6 +10,7 @@ In order to obtain a Last.fm API key, sign up at: http://www.last.fm/api
 	cd bb-last
 
 To run:
+
 	Edit options in bb-last.rb
 	ruby bb-last.rb
 
@@ -27,4 +28,5 @@ The options are defined in the code.
 License
 -------
 Copyright (c) 2012 Adam Lazzarato
+
 Released under The MIT License. Check `LICENSE` for full statement. 

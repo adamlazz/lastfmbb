@@ -50,8 +50,8 @@ def gen_bb(xml_s, req)
         +req.limit+" "+meth.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
 
 	xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
-	    # Entry
-        name        = e.get_elements("name").first.text
+        # Entry
+        en_name        = e.get_elements("name").first.text
         playcount   = e.get_elements("playcount").first.text
         mbid        = e.get_elements("mbid").first.text
         url         = e.get_elements("url").first.text
@@ -60,16 +60,16 @@ def gen_bb(xml_s, req)
             aname       = e.get_elements("artist/name").first.text
             ambid       = e.get_elements("artist/mbid").first.text
             aurl        = e.get_elements("artist/url").first.text
-            en = Album.new(name, playcount, mbid, url, aname, ambid, aurl)
+            en = Album.new(en_name, playcount, mbid, url, aname, ambid, aurl)
     	elsif (meth == "artist")
             streamable  = e.get_elements("streamable").first.text
-            en = Artist.new(name, playcount, mbid, url, streamable)
+            en = Artist.new(en_name, playcount, mbid, url, streamable)
     	elsif (meth == "track")
             streamable  = e.get_elements("streamable").first.text
             aname       = e.get_elements("artist/name").first.text
             ambid       = e.get_elements("artist/mbid").first.text
             aurl        = e.get_elements("artist/url").first.text
-            en = Track.new(name, playcount, mbid, url, streamable, aname, ambid, aurl)
+            en = Track.new(en_name, playcount, mbid, url, streamable, aname, ambid, aurl)
         end
     	
     	if (meth == "album" || meth == "track")

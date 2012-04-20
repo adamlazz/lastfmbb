@@ -11,7 +11,7 @@ require_relative 'request.rb'
 
 # call last.fm API 
 def load_top_last(req, api_key)
-    uri = URI.parse('http://ws.audioscrobbler.com/2.0/?method=' + req.method +  \
+    uri = URI.parse('http://ws.audioscrobbler.com/2.0/?method=' + req.meth +  \
         '&user=' + req.user +       \
         '&period=' + req.period +   \
         '&limit=' + req.limit +     \
@@ -36,47 +36,46 @@ def gen_bb(xml_s, req)
     color = "#d51007"
     items = 1
         
-    if (req.method == "user.getTopAlbums")
-        method = "album"
-    elsif (req.method == "user.getTopArtists")
-        method = "artist"
-    elsif (req.method == "user.getTopTracks")
-        method = "track"
-        puts method
+    if (req.meth == "user.getTopAlbums")
+        meth = "album"
+    elsif (req.meth == "user.getTopArtists")
+        meth = "artist"
+    elsif (req.meth == "user.getTopTracks")
+        meth = "track"
     else
-        $stderr.puts("Incorrect method.")
+        $stderr.puts("Incorrect meth.")
     end
     
     result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s top "    \
-        +req.limit+" "+method.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
+        +req.limit+" "+meth.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
 
-	xml.elements.each("*/top" + method.to_s + "s/" + method.to_s + "") { |e|   
+	xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
 	    # Entry
-	    name        = e.get_elements("name").first.text
+        name        = e.get_elements("name").first.text
         playcount   = e.get_elements("playcount").first.text
-    	mbid        = e.get_elements("mbid").first.text
+        mbid        = e.get_elements("mbid").first.text
         url         = e.get_elements("url").first.text
         
-        if (method == "album")
-    	    aname       = e.get_elements("artist/name").first.text
-        	ambid       = e.get_elements("artist/mbid").first.text
-        	aurl        = e.get_elements("artist/url").first.text
-        	en = Album.new(name, playcount, mbid, url, aname, ambid, aurl)
-    	elsif (method == "artist")
-    	    streamable  = e.get_elements("streamable").first.text
-    	    en = Artist.new(name, playcount, mbid, url, streamable)
-    	elsif (method == "track")
-    	    streamable  = e.get_elements("streamable").first.text
-    	    aname       = e.get_elements("artist/name").first.text
-        	ambid       = e.get_elements("artist/mbid").first.text
-        	aurl        = e.get_elements("artist/url").first.text
+        if (meth == "album")
+            aname       = e.get_elements("artist/name").first.text
+            ambid       = e.get_elements("artist/mbid").first.text
+            aurl        = e.get_elements("artist/url").first.text
+            en = Album.new(name, playcount, mbid, url, aname, ambid, aurl)
+    	elsif (meth == "artist")
+            streamable  = e.get_elements("streamable").first.text
+            en = Artist.new(name, playcount, mbid, url, streamable)
+    	elsif (meth == "track")
+            streamable  = e.get_elements("streamable").first.text
+            aname       = e.get_elements("artist/name").first.text
+            ambid       = e.get_elements("artist/mbid").first.text
+            aurl        = e.get_elements("artist/url").first.text
             en = Track.new(name, playcount, mbid, url, streamable, aname, ambid, aurl)
         end
     	
-    	if (method == "album" || method == "track")
+    	if (meth == "album" || meth == "track")
             result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.aname + "[/b][/url] (" + en.playcount + ")[/quote]
                 [align=center][url=" + en.url + "][img][/img][/url][/align]\n"
-        elsif (method == "artist")
+        elsif (meth == "artist")
             result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote]
                 [align=center][url=" + en.url + "][img][/img][/url][/align]\n"
         end
@@ -87,14 +86,14 @@ def gen_bb(xml_s, req)
 end
 
 # main
-method  = "user.getTopTracks"  # Albums, Artists, Tracks
+meth    = "user.getTopTracks"   # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
 limit   = "5"                   # results per page (default 50) 
 page    = "1"                   # page to return (default 1)
 api_key = "" # use your own
 
-request = Request.new(method, user, period, limit, page)
+request = Request.new(meth, user, period, limit, page)
 
 xml_s = load_top_last(request, api_key) # XML string
 bbcode = gen_bb(xml_s, request) # outputs BBCode string

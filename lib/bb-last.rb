@@ -46,12 +46,12 @@ def gen_bb(xml_s, req)
         $stderr.puts("Incorrect meth.")
     end
     
-    result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s top "    \
+    result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top "    \
         +req.limit+" "+meth.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
 
 	xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
         # Entry
-        en_name        = e.get_elements("name").first.text
+        en_name     = e.get_elements("name").first.text
         playcount   = e.get_elements("playcount").first.text
         mbid        = e.get_elements("mbid").first.text
         url         = e.get_elements("url").first.text
@@ -81,6 +81,9 @@ def gen_bb(xml_s, req)
         end
         items += 1;
     }
+    github_page = "https://github.com/adamlazz/bb-last"
+    result << "[align=right]Generated on " + Date.today.to_s + "[/align]\n"
+    result << "[align=right][b][url=" + github_page + "]GitHub[/url][/b][/align]"
     
     result
 end

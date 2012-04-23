@@ -1,5 +1,6 @@
 require "net/http"
 require "uri"
+require "date"
 require "rexml/document"
 include REXML
 
@@ -49,35 +50,36 @@ def gen_bb(xml_s, req)
     result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top "    \
         +req.limit+" "+meth.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
 
-	xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
+    xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
         # Entry
         en_name     = e.get_elements("name").first.text
         playcount   = e.get_elements("playcount").first.text
         mbid        = e.get_elements("mbid").first.text
         url         = e.get_elements("url").first.text
+        image_s = e.get_elements("image")[0].text
+        image_m = e.get_elements("image")[1].text
+        image_l = e.get_elements("image")[2].text
         
         if (meth == "album")
             aname       = e.get_elements("artist/name").first.text
             ambid       = e.get_elements("artist/mbid").first.text
             aurl        = e.get_elements("artist/url").first.text
-            en = Album.new(en_name, playcount, mbid, url, aname, ambid, aurl)
+            en = Album.new(en_name, playcount, mbid, url, image_l, aname, ambid, aurl)
     	elsif (meth == "artist")
             streamable  = e.get_elements("streamable").first.text
-            en = Artist.new(en_name, playcount, mbid, url, streamable)
+            en = Artist.new(en_name, playcount, mbid, url, image_l, streamable)
     	elsif (meth == "track")
             streamable  = e.get_elements("streamable").first.text
             aname       = e.get_elements("artist/name").first.text
             ambid       = e.get_elements("artist/mbid").first.text
             aurl        = e.get_elements("artist/url").first.text
-            en = Track.new(en_name, playcount, mbid, url, streamable, aname, ambid, aurl)
+            en = Track.new(en_name, playcount, mbid, url, image_l, streamable, aname, ambid, aurl)
         end
     	
     	if (meth == "album" || meth == "track")
-            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.aname + "[/b][/url] (" + en.playcount + ")[/quote]
-                [align=center][url=" + en.url + "][img][/img][/url][/align]\n"
+            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.aname + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         elsif (meth == "artist")
-            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote]
-                [align=center][url=" + en.url + "][img][/img][/url][/align]\n"
+            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         end
         items += 1;
     }
@@ -89,7 +91,7 @@ def gen_bb(xml_s, req)
 end
 
 # main
-meth    = "user.getTopTracks"   # Albums, Artists, Tracks
+meth    = "user.getTopAlbums"   # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
 limit   = "5"                   # results per page (default 50) 

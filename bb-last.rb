@@ -4,12 +4,6 @@ require "date"
 require "rexml/document"
 include REXML
 
-require_relative 'album.rb'
-require_relative 'artist.rb'
-require_relative 'track.rb'
-require_relative 'entry.rb'
-require_relative 'request.rb'
-
 # call last.fm API 
 def load_top_last(req, api_key)
     uri = URI.parse('http://ws.audioscrobbler.com/2.0/?method=' + req.meth +  \
@@ -50,8 +44,7 @@ def gen_bb(xml_s, req)
     result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top "    \
         +req.limit+" "+meth.to_s.capitalize+"s ("+req.period+"):[/b][/color][/size][/align]"
 
-    xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|   
-        # Entry
+    xml.elements.each("*/top" + meth.to_s + "s/" + meth.to_s + "") { |e|
         en_name     = e.get_elements("name").first.text
         playcount   = e.get_elements("playcount").first.text
         mbid        = e.get_elements("mbid").first.text
@@ -76,10 +69,13 @@ def gen_bb(xml_s, req)
             en = Track.new(en_name, playcount, mbid, url, image_l, streamable, aname, ambid, aurl)
         end
     	
-    	if (meth == "album" || meth == "track")
-            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.aname + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
+    	result << "[quote][b]" + items.to_s + ".[/b] "
+    	if (meth == "album")
+    	    result << "[url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.url + "][b]" + en.name + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         elsif (meth == "artist")
-            result << "[quote][b]" + items.to_s + ".[/b] [url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
+            result << "[url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
+    	elsif (meth == "track")
+            result << "[url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.name + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         end
         items += 1;
     }
@@ -88,6 +84,10 @@ def gen_bb(xml_s, req)
     result << "[align=right][b][url=" + github_page + "]GitHub[/url][/b][/align]"
     
     result
+end
+
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each do |file| 
+  require file
 end
 
 # main

@@ -19,7 +19,7 @@ The options are defined in the code.
 
 * Meth: `user.getTopAlbums`, `user.getTopArtists`, `user.getTopTracks`
 * User: Last.fm user name
-* Time: `overall`, `7day`, `3month`, `6month`, `12month`
+* Time: `overall`, `7day`, `1month`, `3month`, `6month`, `12month`
 * Limit: integer results per page
 * Page: integer page number to return
 

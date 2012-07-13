@@ -49,16 +49,15 @@ def gen_bb(xml_s, req)
         playcount   = e.get_elements("playcount").first.text
         mbid        = e.get_elements("mbid").first.text
         url         = e.get_elements("url").first.text
-        image_s = e.get_elements("image")[0].text
-        image_m = e.get_elements("image")[1].text
-        image_l = e.get_elements("image")[2].text
         
         if (meth == "album")
+            image_l = e.get_elements("image")[2].text
             aname       = e.get_elements("artist/name").first.text
             ambid       = e.get_elements("artist/mbid").first.text
             aurl        = e.get_elements("artist/url").first.text
             en = Album.new(en_name, playcount, mbid, url, image_l, aname, ambid, aurl)
     	elsif (meth == "artist")
+            image_l = e.get_elements("image")[2].text
             streamable  = e.get_elements("streamable").first.text
             en = Artist.new(en_name, playcount, mbid, url, image_l, streamable)
     	elsif (meth == "track")

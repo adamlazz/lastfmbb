@@ -4,7 +4,7 @@ require "date"
 require "rexml/document"
 include REXML
 
-# call last.fm API 
+# call last.fm API
 def load_top_last(req, api_key)
     uri = URI.parse('http://ws.audioscrobbler.com/2.0/?method=' + req.meth +  \
     '&user=' + req.user +       \
@@ -15,7 +15,7 @@ def load_top_last(req, api_key)
 
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)        
+    response = http.request(request)
 
     if (response.code.to_i == 200) # OK
         response.body
@@ -84,20 +84,20 @@ def gen_bb(xml_s, req)
     }
     github_page = "https://github.com/adamlazz/bb-last"
     result << "[align=right]Generated on " + Date.today.to_s + "[/align]\n"
-    result << "[align=right][b][url=" + github_page + "]GitHub[/url][/b][/align]"
+    result << "[align=right][b][url=" + github_page + "]Fork on GitHub[/url][/b][/align]"
 
     result
 end
 
-Dir[File.dirname(__FILE__) + '/lib/*.rb'].each do |file| 
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each do |file|
     require file
 end
 
 # main
-meth    = "user.getTopTracks"   # Albums, Artists, Tracks
+meth    = "user.getTopAlbums"   # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
-limit   = "5"                   # results per page (default 50) 
+limit   = "5"                   # results per page (default 50)
 page    = "1"                   # page to return (default 1)
 api_key = "" # use your own
 

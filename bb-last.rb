@@ -78,7 +78,7 @@ def gen_bb(xml_s, req)
         elsif (meth == "artist")
             result << "[url=" + en.url + "]" + en.name + "[/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         elsif (meth == "track")
-            result << "[url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.aurl + "][b]" + en.name + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
+            result << "[url=" + en.aurl + "]" + en.aname + "[/url] - [url=" + en.url + "][b]" + en.name + "[/b][/url] (" + en.playcount + ")[/quote][align=center][url=" + en.url + "][img]" + en.image + "[/img][/url][/align]\n"
         end
         items += 1;
     }
@@ -94,7 +94,7 @@ Dir[File.dirname(__FILE__) + '/lib/*.rb'].each do |file|
 end
 
 # main
-meth    = "user.getTopAlbums"   # Albums, Artists, Tracks
+meth    = "user.getTopTracks"   # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
 limit   = "5"                   # results per page (default 50)

@@ -92,7 +92,7 @@ Dir[File.dirname(__FILE__) + '/lib/*.rb'].each do |file|
 end
 
 # main
-method    = "user.getTopAlbums"   # Albums, Artists, Tracks
+method  = "user.getTopAlbums"   # Albums, Artists, Tracks
 user    = "nodonutweek"         # Last.fm user name
 period  = "3month"              # overall, 7day, 3month, 6month, 12month (default overall)
 limit   = "5"                   # results per page (default 50)

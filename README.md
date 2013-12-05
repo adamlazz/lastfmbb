@@ -17,11 +17,11 @@ Options
 -------
 The options are defined in the code.
 
-* Meth: `user.getTopAlbums`, `user.getTopArtists`, `user.getTopTracks`
+* method: `user.getTopAlbums`, `user.getTopArtists`, `user.getTopTracks`
 * User: Last.fm user name
 * Time: `overall`, `7day`, `1month`, `3month`, `6month`, `12month`
 * Limit: integer results per page
-* Page: integer page number to return
+* Page: integer page number to return 
 
 License
 -------

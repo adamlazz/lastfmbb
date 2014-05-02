@@ -1,6 +1,9 @@
-require_relative 'entry.rb'
-
-class Artist < Entry
+class Artist < Lastfmbb
+    attr_reader :name
+    attr_reader :playcount
+    attr_reader :mbid
+    attr_reader :url
+    attr_reader :image
     attr_reader :streamable
 
     def initialize(name, playcount, mbid, url, image, streamable)

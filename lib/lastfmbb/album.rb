@@ -1,6 +1,9 @@
-require_relative 'entry.rb'
-
-class Album < Entry
+class Album < Lastfmbb
+    attr_reader :name
+    attr_reader :playcount
+    attr_reader :mbid
+    attr_reader :url
+    attr_reader :image
     attr_reader :aname
     attr_reader :abmid
     attr_reader :aurl

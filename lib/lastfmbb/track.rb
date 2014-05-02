@@ -1,8 +1,11 @@
-require_relative 'entry.rb'
-
-class Track < Entry
+class Track < Lastfmbb
+    attr_reader :name
+    attr_reader :playcount
+    attr_reader :mbid
+    attr_reader :url
+    attr_reader :image
     attr_reader :streamable
-    attr_reader :aname	
+    attr_reader :aname
     attr_reader :ambid
     attr_reader :aurl
 

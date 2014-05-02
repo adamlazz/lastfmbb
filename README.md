@@ -1,30 +1,41 @@
-bb-last
+lastfmbb
 =======
-`bb-last.rb` is a Ruby application using the Last.fm API that produces BBCode to be pasted into your About Me section based on your top artists, albums or tracks.
+`lastfmbb` is a Ruby gem that uses the Last.fm API to generate BBCode for pasting into your About Me section based on your top artists, albums or tracks.
 
 Installation
 ------------
-In order to obtain a Last.fm API key, sign up at: http://www.last.fm/api
+```gem install lastfmbb```
 
-	git clone git@github.com:adamlazz/bb-last.git
-	cd bb-last
+Usage
+-----
+To use the gem, create a `Request` object with the required options:
 
-To run: Edit options in bb-last.rb
-	
-	ruby bb-last.rb
+* API Key: http://www.last.fm/api (required)
+* Method: `user.getTopAlbums`, `user.getTopArtists`, `user.getTopTracks` (required)
+* User: Last.fm user name (required)
+* Time: `overall`, `7day`, `1month`, `3month`, `6month`, `12month` (Optional, defaults to overall)
+* Limit: integer results per page (Optional, defaults to 50)
+* Page: integer page number to return (Optional, defaults to 1)
 
-Options
+Then, pass this object to the `load_and_gen` method, which returns generated BBCode.
+
+Example
 -------
-The options are defined in the code.
+```ruby
+require 'lastfmbb'
 
-* method: `user.getTopAlbums`, `user.getTopArtists`, `user.getTopTracks`
-* User: Last.fm user name
-* Time: `overall`, `7day`, `1month`, `3month`, `6month`, `12month`
-* Limit: integer results per page
-* Page: integer page number to return 
+api_key = ""                  # Use your own
+method  = "user.getTopAlbums" # Albums, Artists, Tracks
+user    = "nodonutweek"       # Last.fm user name
+period  = "3month"            # overall, 7day, 3month, 6month, 12month (Optional, default overall)
+limit   = 5                   # Results per page (Optional, default 50)
+page    = 1                   # Page to return (Optional, default 1)
+
+request = Request.new(api_key, method, user, period, limit, page)
+bbcode = Lastfmbb.load_and_gen(request)
+puts bbcode
+```
 
 License
 -------
-Copyright (c) 2012 Adam Lazzarato.
-
-Released under The MIT License. Check `LICENSE` for full statement. 
+Copyright (c) 2012 Adam Lazzarato. Released under The MIT License.

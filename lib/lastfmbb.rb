@@ -44,7 +44,23 @@ class Lastfmbb
             $stderr.puts("Incorrect method.")
         end
 
-        result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top " +req.limit.to_s+" "+req.method.sub(/^[user.getTop]*/,"").capitalize+"s ("+req.period.to_s+"):[/b][/color][/size][/align]"
+        if (req.period == "7day")
+            req.period = "Last 7 days"
+        elsif (req.period == "1month")
+            req.period = "Last month"
+        elsif (req.period == "3month")
+            req.period = "Last 3 months"
+        elsif (req.period == "6month")
+            req.period = "Last 6 months"
+        elsif (req.period == "12month")
+            req.period = "Last year"
+        elsif (req.period == "overall")
+            req.period = "Overall"
+        else
+            $stderr.puts("Incorrect period.")
+        end
+
+        result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top " +req.limit.to_s+" "+req.method.sub("user.getTop","").capitalize+"s ("+req.period.to_s+"):[/b][/color][/size][/align]"
 
         xml.elements.each("*/top" + req.method.to_s + "s/" + req.method.to_s + "") { |e|
             en_name     = e.get_elements("name").first.text

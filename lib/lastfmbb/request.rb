@@ -2,7 +2,7 @@ class Request
     attr_reader :api_key
     attr_accessor :method
     attr_reader :user
-    attr_reader :period
+    attr_accessor :period
     attr_reader :limit
     attr_reader :page
 

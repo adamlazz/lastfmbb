@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'lastfmbb'
-    s.version     = '0.0.0'
+    s.version     = '0.1.0'
     s.executables << 'lastfmbb'
     s.date        = '2014-05-01'
     s.summary     = "lastfmbb"
@@ -12,9 +12,7 @@ Gem::Specification.new do |s|
         "lib/lastfmbb/album.rb",
         "lib/lastfmbb/artist.rb",
         "lib/lastfmbb/request.rb",
-        "lib/lastfmbb/track.rb",
-        "Rakefile"]
-    s.test_files = ["test/test_lastfmbb.rb"]
+        "lib/lastfmbb/track.rb"]
     s.homepage    = 'http://rubygems.org/gems/lastfmbb'
     s.license     = 'MIT'
 end

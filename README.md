@@ -4,7 +4,11 @@ lastfmbb
 
 Installation
 ------------
-```gem install lastfmbb```
+`lastfmbb` is available on [RubyGems] [1] and can be installed using the command:
+
+```
+gem install lastfmbb
+```
 
 Usage
 -----
@@ -39,3 +43,5 @@ puts bbcode
 License
 -------
 Copyright (c) 2012 Adam Lazzarato. Released under The MIT License.
+
+[1]: https://rubygems.org/gems/lastfmbb

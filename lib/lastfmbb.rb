@@ -60,9 +60,9 @@ class Lastfmbb
             $stderr.puts("Incorrect period.")
         end
 
-        result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top " +req.limit.to_s+" "+req.method.sub("user.getTop","").capitalize+"s ("+req.period.to_s+"):[/b][/color][/size][/align]"
+        result="[align=center][size=11][color="+color+"][b]"+req.user.capitalize+"'s Top " +req.limit.to_s+" "+req.method.capitalize+"s ("+req.period.to_s+"):[/b][/color][/size][/align]"
 
-        xml.elements.each("*/top" + req.method.to_s + "s/" + req.method.to_s + "") { |e|
+        xml.elements.each("*/top" + req.method + "s/" + req.method + "") { |e|
             en_name     = e.get_elements("name").first.text
             playcount   = e.get_elements("playcount").first.text
             mbid        = e.get_elements("mbid").first.text

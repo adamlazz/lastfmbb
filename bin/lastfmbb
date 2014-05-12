@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'lastfmbb'
 
-request = Request.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3], ARGV[4], ARGV[5])
+request = Request.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3] = "overall", ARGV[4] = 5, ARGV[5] = 1)
 bbcode = Lastfmbb.load_and_gen(request)
 puts bbcode
